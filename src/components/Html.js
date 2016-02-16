@@ -16,7 +16,7 @@ export default class Html extends Component {
           <title>React Universal Rendering</title>
           <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css' />
         </head>
-        <body>
+        <body style={{ paddingTop: 20 }}>
           <div id='root' dangerouslySetInnerHTML={{ __html: content }}/>
           <script src='/client.js' charSet='UTF-8' />
         </body>
