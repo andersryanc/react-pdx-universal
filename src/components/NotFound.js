@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-export default class Home extends Component {
+export default class NotFound extends Component {
   static propTypes = {
   }
 
@@ -8,8 +8,8 @@ export default class Home extends Component {
     return (
       <div className='container'>
         <div className='page-heading'>
-          <h1>Welcome Home.</h1>
-          <p>Huzzah!</p>
+          <h1>Ruh oh!</h1>
+          <p>The page you were looking for isn't here.</p>
         </div>
       </div>
     );

@@ -10,7 +10,8 @@ import compression from 'compression';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import Html from './components/Html';
-import Home from './components/Home';
+import routes from './routes';
+import { match, RouterContext } from 'react-router';
 
 const app = new Express();
 const server = new http.Server(app);
@@ -22,15 +23,26 @@ app.use(require('serve-static')(path.join(__dirname, '..', 'static')));
 app.use(require('serve-static')(path.join(__dirname, '..', 'dist')));
 
 app.use((req, res) => {
-  const props = {
-    component: <Home />
-  };
+  match({ routes: routes, location: req.originalUrl }, (error, redirectLocation, renderProps) => {
+    if (error) {
+      res.status(500).send(error.message);
+    } else if (redirectLocation) {
+      res.redirect(302, redirectLocation.pathname + redirectLocation.search);
+    } else if (renderProps) {
+      let status = renderProps.routes.find(ele => ele.status === 404) ? 404 : 200;
 
-  const renderedHtml = ReactDOM.renderToString(<Html {...props} />);
-  const response = `<!DOCTYPE html>${renderedHtml}`;
+      const props = {
+        component: <RouterContext {...renderProps} />,
+      };
 
-  res.status(200);
-  res.send(response);
+      const renderedHtml = ReactDOM.renderToString(<Html {...props} />);
+      const response = `<!DOCTYPE html>${renderedHtml}`;
+
+      res.status(status).send(response);
+    } else {
+      res.status(404).send('Not found');
+    }
+  });
 });
 
 const PORT = 3000;
