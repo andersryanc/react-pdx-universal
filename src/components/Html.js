@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom/server';
 
-const { node } = React.PropTypes;
+const { node, string } = React.PropTypes;
 
 export default class Html extends Component {
   static propTypes ={
-    component: node.isRequired
+    component: node.isRequired,
+    scriptTag: string,
   }
 
   render() {
@@ -18,6 +19,7 @@ export default class Html extends Component {
         </head>
         <body style={{ paddingTop: 20 }}>
           <div id='root' dangerouslySetInnerHTML={{ __html: content }}/>
+          <div dangerouslySetInnerHTML={{ __html: this.props.scriptTag }} />
           <script src='/client.js' charSet='UTF-8' />
         </body>
       </html>
