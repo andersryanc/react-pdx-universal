@@ -2,4 +2,8 @@
 require('babel-register');
 require('babel-polyfill');
 
-require('../src/server');
+if (require('piping')({
+  hook: true,
+})) {
+  require('../src/server');
+}

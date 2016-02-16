@@ -7,13 +7,9 @@ import 'babel-polyfill';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Home from './components/Home';
 
 ReactDOM.render(
-  <div className='container'>
-    <div className='page-heading'>
-      <h1>It works!</h1>
-      <p>Huzzah!</p>
-    </div>
-  </div>,
+  <Home />,
   document.getElementById('root')
 );
