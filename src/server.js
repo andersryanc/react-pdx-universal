@@ -10,6 +10,7 @@ import compression from 'compression';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import Html from './components/Html';
+import Home from './components/Home';
 
 const app = new Express();
 const server = new http.Server(app);
@@ -21,8 +22,13 @@ app.use(require('serve-static')(path.join(__dirname, '..', 'static')));
 app.use(require('serve-static')(path.join(__dirname, '..', 'dist')));
 
 app.use((req, res) => {
-  const renderedHtml = ReactDOM.renderToString(<Html/>);
+  const props = {
+    component: <Home />
+  };
+
+  const renderedHtml = ReactDOM.renderToString(<Html {...props} />);
   const response = `<!DOCTYPE html>${renderedHtml}`;
+
   res.status(200);
   res.send(response);
 });
